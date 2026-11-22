@@ -1,0 +1,327 @@
+{
+ "version_esquema": "1.0",
+ "sitio": "ejemplo.example",
+ "url": "https://ejemplo.example/",
+ "fecha_iso": "2026-08-25T10:00:00-04:00",
+ "duracion_segundos": 300,
+ "puntaje_global": 6.6,
+ "puntaje_metodo": "Media ponderada de los seis ejes con los pesos publicados en el anexo.",
+ "ponderaciones": {
+  "eje1": 0.25,
+  "eje2": 0.15,
+  "eje3": 0.15,
+  "eje4": 0.15,
+  "eje5": 0.2,
+  "eje6": 0.1
+ },
+ "entorno": {
+  "maquina": "banco-de-pruebas",
+  "so": "Darwin",
+  "node": "v26.0.0",
+  "zona_horaria": "America/Santiago"
+ },
+ "directorio_evidencia": "evidencia/",
+ "cobertura_paginas": {
+  "descubiertas": 47,
+  "auditadas": 15,
+  "muestra_parcial": true,
+  "tope_aplicado": 15,
+  "metodo": "Prioridad publicada: pagina principal > mas enlaces entrantes del menu > orden del sitemap.",
+  "declaracion": "MUESTRA PARCIAL: se auditaron 15 de 47 paginas descubiertas. Todo conteo por pagina de este informe se refiere a esas 15, no al sitio entero."
+ },
+ "paginas_auditadas": [
+  {
+   "url": "https://ejemplo.example/",
+   "status_http": 200
+  },
+  {
+   "url": "https://ejemplo.example/uno/",
+   "status_http": 200
+  }
+ ],
+ "medicion_invalida": [
+  {
+   "que_se_intento": "cabeceras de servidor sobre una URL que no dio 200",
+   "motivo": "la URL devolvio 404, no 200. REGLA DURA 1: las cabeceras solo se miden sobre respuestas 200.",
+   "momento_iso": "2026-08-25T10:01:00-04:00"
+  }
+ ],
+ "herramientas": [
+  {
+   "nombre": "Lighthouse",
+   "version": "13.4.1",
+   "desde": "local",
+   "comando": "npx lighthouse"
+  },
+  {
+   "nombre": "axe-core",
+   "version": "4.11.1",
+   "desde": "local",
+   "comando": "axe.run()"
+  }
+ ],
+ "ejes": {
+  "eje1": {
+   "id": "eje1",
+   "nombre": "Performance y tiempos de carga",
+   "puntaje": 4.5,
+   "puntaje_metodo": "HOW2 declara: PageSpeed y GTmetrix. Equivalente libre usado: Lighthouse.",
+   "medido_en_iso": "2026-08-25T10:01:00-04:00",
+   "fuentes": [
+    "HOW2 declara: Google PageSpeed Insights y GTmetrix",
+    "Equivalente libre usado: Lighthouse 13.4.1 local"
+   ],
+   "indicadores": {
+    "eje1.lcp_movil": {
+     "id": "eje1.lcp_movil",
+     "nombre": "LCP (Largest Contentful Paint) — movil",
+     "valor": 11.56,
+     "unidad": "s",
+     "estado": "mal",
+     "metodo": "Lighthouse preset movil",
+     "desde": "lighthouse",
+     "detalle": "Medido en 15 de 15 paginas. Emulacion COMPROBADA: el navegador renderizo a 412 px. Clasificacion CRITICO por la medicion, con corridas validas y una metrica de opinion sobre la navegacion semantica del sitio.",
+     "medido_en_iso": "2026-08-25T10:01:00-04:00"
+    },
+    "eje1.gtmetrix_grade": {
+     "id": "eje1.gtmetrix_grade",
+     "nombre": "GTmetrix Grade (reproducido)",
+     "valor": "C",
+     "unidad": "letra",
+     "estado": "mejorar",
+     "metodo": "Aproximacion desde Lighthouse",
+     "desde": "lighthouse",
+     "detalle": "Aproximado desde las auditorias de Lighthouse.",
+     "medido_en_iso": "2026-08-25T10:01:00-04:00"
+    },
+    "eje1.crux_lcp_p75": {
+     "id": "eje1.crux_lcp_p75",
+     "nombre": "LCP de campo (CrUX) p75",
+     "valor": "NO_MEDIDO",
+     "unidad": "s",
+     "estado": "no_medido",
+     "metodo": "API de PageSpeed Insights, campo loadingExperience",
+     "desde": "api_externa",
+     "valido": false,
+     "motivo_no_medido": "Google no publica datos de campo para este sitio: no alcanza el minimo de trafico.",
+     "medido_en_iso": "2026-08-25T10:01:00-04:00"
+    }
+   },
+   "hallazgos": [
+    {
+     "titulo": "Corregir \"LCP (Largest Contentful Paint) — movil\": medido 11.56 s",
+     "detalle": "Medido: 11.56 s. Umbral de bien: <= 2.5 s. Como se midio: Lighthouse 13.4.1 local, preset movil, throttling simulado 1638.4 kbps / RTT 150 ms, CPU x4, 3/3 corridas validas y emulacion comprobada a 412 px frente a los 412 configurados.",
+     "nivel": "CRITICO",
+     "esfuerzo_horas": "NO_MEDIDO",
+     "evidencia": [
+      "eje1-evidencia/lighthouse-movil-1.json"
+     ],
+     "indicadores": [
+      "eje1.lcp_movil"
+     ],
+     "urls_afectadas": [
+      "https://ejemplo.example/"
+     ]
+    }
+   ]
+  },
+  "eje2": {
+   "id": "eje2",
+   "nombre": "Experiencia de usuario (UX)",
+   "puntaje": 7.3,
+   "puntaje_metodo": "Media de los indicadores del eje.",
+   "fuentes": [
+    "HOW2: inspeccion visual",
+    "VSL: DOM renderizado por Chrome/CDP"
+   ],
+   "indicadores": {
+    "eje2.typos": {
+     "id": "eje2.typos",
+     "nombre": "Errores de ortografia",
+     "valor": 22,
+     "unidad": "conteo",
+     "estado": "mal",
+     "metodo": "aspell",
+     "desde": "dom_renderizado",
+     "detalle": "22 apariciones sobre 15 paginas.",
+     "medido_en_iso": "2026-08-25T10:02:00-04:00"
+    }
+   },
+   "hallazgos": []
+  },
+  "eje3": {
+   "id": "eje3",
+   "nombre": "Tecnologia y librerias",
+   "puntaje": 9.1,
+   "puntaje_metodo": "Media de los indicadores del eje.",
+   "fuentes": [
+    "huellas sobre DOM renderizado"
+   ],
+   "indicadores": {
+    "eje3.cms": {
+     "id": "eje3.cms",
+     "nombre": "CMS detectado",
+     "valor": "WordPress",
+     "unidad": "texto",
+     "estado": "informativo",
+     "metodo": "huellas en el HTML",
+     "desde": "html_crudo",
+     "detalle": "Version no confirmada.",
+     "medido_en_iso": "2026-08-25T10:03:00-04:00"
+    },
+    "eje3.librerias_js": {
+     "id": "eje3.librerias_js",
+     "nombre": "Librerías JavaScript",
+     "valor": [
+      {
+       "nombre": "jQuery",
+       "version": "3.7.1",
+       "ultima": "4.0.0",
+       "obsoleta": true
+      },
+      {
+       "nombre": "Leaflet",
+       "version": "1.9.4",
+       "ultima": "1.9.4",
+       "obsoleta": false
+      }
+     ],
+     "unidad": "lista",
+     "estado": "mejorar",
+     "metodo": "huellas sobre DOM renderizado, contrastadas con registry.npmjs.org",
+     "desde": "navegador_cdp",
+     "origen": "vsl",
+     "fuente_archivo": "eje3-componentes.json",
+     "medido_en_iso": "2026-08-24T10:17:23-04:00",
+     "valido": true
+    }
+   },
+   "hallazgos": []
+  },
+  "eje4": {
+   "id": "eje4",
+   "nombre": "SEO tecnico on-page",
+   "puntaje": 7.9,
+   "puntaje_metodo": "Media de los indicadores del eje.",
+   "fuentes": [
+    "parser propio"
+   ],
+   "indicadores": {
+    "eje4.sitemap": {
+     "id": "eje4.sitemap",
+     "nombre": "Sitemap XML",
+     "valor": false,
+     "unidad": "booleano",
+     "estado": "mal",
+     "metodo": "peticion a /sitemap.xml",
+     "desde": "html_crudo",
+     "detalle": "No responde.",
+     "medido_en_iso": "2026-08-25T10:04:00-04:00"
+    }
+   },
+   "hallazgos": [
+    {
+     "titulo": "Publicar un sitemap XML",
+     "detalle": "No hay sitemap en las rutas habituales.",
+     "nivel": "IMPORTANTE",
+     "esfuerzo_horas": "NO_MEDIDO",
+     "evidencia": [
+      "eje4-evidencia/sitemap.json"
+     ],
+     "indicadores": [
+      "eje4.sitemap"
+     ],
+     "urls_afectadas": [
+      "https://ejemplo.example/",
+      "https://ejemplo.example/uno/"
+     ]
+    }
+   ]
+  },
+  "eje5": {
+   "id": "eje5",
+   "nombre": "Seguridad y confianza",
+   "puntaje": 6.9,
+   "puntaje_metodo": "Media de los indicadores del eje.",
+   "fuentes": [
+    "SSL Labs API v3 (gratuita, sin clave) — la misma herramienta que uso HOW2"
+   ],
+   "lectura_comercial": "OPINION (no medicion): faltan 2 de 6 cabeceras de proteccion.",
+   "indicadores": {
+    "eje5.csp": {
+     "id": "eje5.csp",
+     "nombre": "Header Content-Security-Policy",
+     "valor": {
+      "presente": false,
+      "presente_en": 0,
+      "de": 15,
+      "paginas_sin": []
+     },
+     "unidad": "objeto",
+     "estado": "mal",
+     "metodo": "cabeceras sobre respuestas 200",
+     "desde": "cabeceras_http",
+     "detalle": "Ausente en las 15 paginas con 200.",
+     "medido_en_iso": "2026-08-25T10:05:00-04:00"
+    }
+   },
+   "hallazgos": [
+    {
+     "titulo": "Publicar una Content-Security-Policy",
+     "detalle": "Ausente en las 15 paginas con 200. Clasificacion IMPORTANTE.",
+     "nivel": "IMPORTANTE",
+     "esfuerzo_horas": "NO_MEDIDO",
+     "evidencia": [
+      "eje5-evidencia/cabeceras.json"
+     ],
+     "indicadores": [
+      "eje5.csp"
+     ],
+     "urls_afectadas": [
+      "https://ejemplo.example/"
+     ]
+    }
+   ]
+  },
+  "eje6": {
+   "id": "eje6",
+   "nombre": "Accesibilidad",
+   "puntaje": 4.1,
+   "puntaje_metodo": "Media de los indicadores del eje.",
+   "fuentes": [
+    "axe-core 4.11.1 — equivalente libre de axe"
+   ],
+   "indicadores": {
+    "eje6.errores": {
+     "id": "eje6.errores",
+     "nombre": "Errores de nivel A/AA",
+     "valor": 28,
+     "unidad": "conteo",
+     "estado": "mal",
+     "metodo": "axe-core sobre DOM renderizado",
+     "desde": "navegador_cdp",
+     "detalle": "28 errores sobre 15 paginas. Navegacion por teclado y estructura semantica afectadas.",
+     "medido_en_iso": "2026-08-25T10:06:00-04:00"
+    }
+   },
+   "hallazgos": [
+    {
+     "titulo": "Resolver 28 errores de accesibilidad de nivel A/AA",
+     "detalle": "Medido con axe-core sobre 15 paginas. OPINION (no medicion): el sitio no cumple WCAG 2.1 AA.",
+     "nivel": "CRITICO",
+     "esfuerzo_horas": "NO_MEDIDO",
+     "evidencia": [
+      "eje6-evidencia/axe.json"
+     ],
+     "indicadores": [
+      "eje6.errores"
+     ],
+     "urls_afectadas": [
+      "https://ejemplo.example/",
+      "https://ejemplo.example/uno/"
+     ]
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "reales": [
+  {
+   "sitio": "ejemplo.com",
+   "nota": "por qué está en el corpus: qué tipo de sitio representa"
+  },
+  {
+   "sitio": "otra-tienda.com",
+   "nota": "WooCommerce, para probar sitemaps con productos"
+  }
+ ]
+}

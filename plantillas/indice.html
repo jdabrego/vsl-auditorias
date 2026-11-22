@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+{{REFRESCO}}
+<title>Auditorías · Void Spore Labs</title>
+<style>
+  :root {
+    --fondo: #fbfbfa;
+    --papel: #ffffff;
+    --tinta: #16161a;
+    --tenue: #6b6b76;
+    --linea: #e5e4e0;
+    --acento: #2f6f4f;
+    --alarma: #a33a2a;
+    --aviso: #8a6a1f;
+    --radio: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fondo: #111113;
+      --papel: #18181b;
+      --tinta: #ececef;
+      --tenue: #9a9aa4;
+      --linea: #2a2a2f;
+      --acento: #6cc39a;
+      --alarma: #e08573;
+      --aviso: #d6b45c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--fondo);
+    color: var(--tinta);
+    font: 15px/1.55 ui-sans-serif, -apple-system, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .envoltura { max-width: 940px; margin: 0 auto; padding: 56px 24px 96px; }
+
+  header { margin-bottom: 40px; }
+  h1 {
+    margin: 0 0 6px;
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+  .resumen { color: var(--tenue); font-size: 13.5px; }
+
+  /* Lanzar es la accion principal: caja grande, boton solido. El filtro va abajo y mas
+     chico. Antes habia un solo campo que decia "Filtrar" pero parecia la entrada
+     principal, y lo primero que hizo Daniel fue escribir un sitio esperando auditarlo. */
+  .lanzar { display: flex; gap: 8px; margin: 0 0 10px; flex-wrap: wrap; }
+  .lanzar input {
+    flex: 1 1 240px;
+    padding: 11px 14px;
+    font: inherit;
+    color: inherit;
+    background: var(--papel);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio);
+  }
+  .lanzar input[name="cliente"] { flex: 0 1 190px; }
+  .lanzar select {
+    flex: 0 1 auto;
+    padding: 11px 12px;
+    font: inherit;
+    color: inherit;
+    background: var(--papel);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio);
+  }
+  .lanzar select:focus { outline: 2px solid var(--acento); outline-offset: 1px; }
+  .lanzar input:focus { outline: 2px solid var(--acento); outline-offset: 1px; }
+  .lanzar button {
+    padding: 11px 20px;
+    font: 600 14px/1 inherit;
+    color: var(--fondo);
+    background: var(--acento);
+    border: 0;
+    border-radius: var(--radio);
+    cursor: pointer;
+  }
+  .lanzar button:hover { filter: brightness(1.08); }
+  .lanzar-no { margin: 0 0 10px; color: var(--tenue); font-size: 13px; }
+  .aviso {
+    margin: 0 0 10px;
+    padding: 9px 13px;
+    font-size: 13px;
+    color: var(--acento);
+    border: 1px solid currentColor;
+    border-radius: var(--radio);
+  }
+
+  .buscador {
+    width: 100%;
+    margin: 4px 0 8px;
+    padding: 8px 13px;
+    font-size: 13.5px;
+    font: inherit;
+    color: inherit;
+    background: var(--papel);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio);
+  }
+  .buscador:focus { outline: 2px solid var(--acento); outline-offset: 1px; }
+
+  .lista { list-style: none; margin: 0; padding: 0; }
+  .ficha {
+    display: grid;
+    grid-template-columns: 78px 1fr auto;
+    gap: 18px;
+    align-items: start;
+    padding: 20px 0;
+    border-top: 1px solid var(--linea);
+  }
+  .ficha:last-child { border-bottom: 1px solid var(--linea); }
+  .en-curso .puntaje { animation: latido 1.4s ease-in-out infinite; }
+  @keyframes latido { 0%,100% { opacity: .3 } 50% { opacity: 1 } }
+  @media (prefers-reduced-motion: reduce) { .en-curso .puntaje { animation: none } }
+
+  .puntaje {
+    font: 600 26px/1 ui-monospace, "SF Mono", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+  }
+  /* Las propiedades van sueltas a proposito: en el shorthand `font` la familia no
+     admite `inherit`, asi que `font: 400 11px/1 inherit` se descarta ENTERA y el "/10"
+     terminaba heredando los 26px del puntaje, leyendose como una fraccion partida. */
+  .puntaje small {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--tenue);
+    margin-left: 1px;
+  }
+  .p-bien { color: var(--acento); }
+  .p-medio { color: var(--aviso); }
+  .p-mal { color: var(--alarma); }
+  .p-nulo { color: var(--tenue); }
+
+  .titulo { margin: 0 0 3px; font-size: 15.5px; font-weight: 600; letter-spacing: -0.01em; }
+  .titulo a { color: inherit; text-decoration: none; }
+  .titulo a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .meta { color: var(--tenue); font-size: 13px; }
+  .meta span + span::before { content: "·"; margin: 0 7px; opacity: .55; }
+
+.delta { font-weight: 600; }
+  .d-sube { color: var(--acento); }
+  .d-baja { color: var(--alarma); }
+  .d-igual { color: var(--tenue); }
+
+  .ejes { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+  .eje {
+    font: 500 11px/1 ui-monospace, "SF Mono", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+    padding: 4px 7px;
+    border: 1px solid var(--linea);
+    border-radius: 6px;
+    color: var(--tenue);
+    white-space: nowrap;
+  }
+  .eje b { font-weight: 600; color: var(--tinta); }
+
+  .marca {
+    display: inline-block;
+    margin-top: 9px;
+    padding: 3px 8px;
+    font-size: 11.5px;
+    font-weight: 500;
+    border-radius: 6px;
+    border: 1px solid currentColor;
+  }
+  .m-parcial { color: var(--aviso); }
+  .m-ilegible { color: var(--alarma); }
+  .m-corriendo { color: var(--acento); }
+
+  .bajadas { display: flex; flex-direction: column; gap: 5px; text-align: right; }
+  .bajadas a {
+    font: 500 12px/1 ui-monospace, "SF Mono", Menlo, monospace;
+    color: var(--tenue);
+    text-decoration: none;
+    padding: 3px 0;
+  }
+  .bajadas a:hover { color: var(--acento); }
+  .cancelar button {
+    font: 500 12px/1 ui-monospace, "SF Mono", Menlo, monospace;
+    color: var(--tenue);
+    background: none;
+    border: 0;
+    padding: 3px 0;
+    cursor: pointer;
+  }
+  .cancelar button:hover { color: var(--alarma); }
+
+  .vacio { padding: 64px 0; text-align: center; color: var(--tenue); }
+  .vacio code {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 9px 13px;
+    background: var(--papel);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio);
+    font-size: 12.5px;
+    text-align: left;
+  }
+
+  @media (max-width: 620px) {
+    .envoltura { padding: 32px 18px 64px; }
+    .ficha { grid-template-columns: 68px 1fr; }
+    .bajadas { grid-column: 1 / -1; flex-direction: row; text-align: left; gap: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="envoltura">
+  <header>
+    <h1>Auditorías</h1>
+    <div class="resumen">{{RESUMEN}}</div>
+  </header>
+
+  {{FORMULARIO}}
+
+  <input class="buscador" id="q" type="search" placeholder="Filtrar la lista de abajo…" autocomplete="off" aria-label="Filtrar auditorías">
+
+  {{CONTENIDO}}
+
+</div>
+<script>
+  // Filtro en el cliente: la lista completa ya viaja en el HTML, asi que filtrar no
+  // necesita ni servidor ni framework.
+  var q = document.getElementById('q');
+  if (q) {
+    q.addEventListener('input', function () {
+      var t = q.value.trim().toLowerCase();
+      document.querySelectorAll('.ficha').forEach(function (f) {
+        f.style.display = !t || (f.dataset.busca || '').indexOf(t) !== -1 ? '' : 'none';
+      });
+    });
+  }
+</script>
+</body>
+</html>

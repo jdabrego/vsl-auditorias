@@ -1,0 +1,52 @@
+__pycache__/
+*.pyc
+.DS_Store
+
+# La cartera de clientes no va en el repositorio
+calibracion/corpus.local.json
+
+# Datos crudos de las campañas: artefactos de corrida con URLs de clientes
+docs/campanas/*.json
+docs/campanas/*.log
+
+# === Contencion de secretos - fase 1 (anadido automaticamente) ===
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Credenciales y tokens
+credentials.json
+credentials*.json
+token.json
+token*.json
+service-account*.json
+serviceAccount*.json
+client_secret*.json
+secrets*.json
+*.local.md
+
+# Material criptografico
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+*.jks
+*.keystore
+id_rsa*
+id_ed25519*
+.netrc
+.npmrc
+.pypirc
+certificados/
+
+# Perfiles de navegador (cookies de sesion y contrasenas guardadas)
+**/chrome-profile*/
+.auth/
+
+!.env.example
+
+# Internal working notes (never commit)
+RETOMAR-AQUI.md
+.DS_Store

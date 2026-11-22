@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.example.auditorias</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>/path/to/vsl-auditorias/servidor.py</string>
+    <string>8096</string>
+  </array>
+
+  <key>WorkingDirectory</key><string>/path/to/vsl-auditorias</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <!-- Plantilla: reemplazá cada /path/to/... antes de cargarla con launchctl.
+         Sin AUTH_FILE la vitrina queda abierta y lo avisa por stderr. -->
+    <key>RAICES</key><string>/path/to/audits-public</string>
+    <!-- Auditorías de clientes: se ven desde la máquina local, NO desde internet. La vitrina está
+         abierta para poder demostrarla, y una demo no tiene por qué exponer los puntajes
+         de seguridad de nadie. -->
+    <key>RAICES_PRIVADAS</key><string>/path/to/audits-private</string>
+    <key>PYTHONUNBUFFERED</key><string>1</string>
+    <!-- Dónde caen las auditorías NUEVAS, según quién las lance. Van explícitas aunque
+         los valores por defecto del código sean estos mismos: si alguien cambia el
+         defecto, esto no se mueve solo y en silencio. CASA es privada por construcción
+         (servidor.py la agrega a las raíces privadas aunque no esté acá abajo). -->
+    <key>CASA</key><string>/path/to/audits-private</string>
+    <key>CASA_PUBLICA</key><string>/path/to/audits-public</string>
+    <!-- Datos de campo de CrUX: cómo se comporta el sitio para las personas reales que
+         lo visitaron, no en simulación. Sin esto el indicador sale NO_MEDIDO y el eje 1
+         —el de mayor peso— queda sin validación independiente. La clave vive fuera del
+         repositorio, en ~/.psi-key con permisos 600. -->
+    <key>PSI_KEY_FILE</key><string>/path/to/.psi-key</string>
+    <!-- Cuántas auditorías puede lanzar internet por hora. Va explícita por lo mismo que
+         CASA: es el único freno a un botón público que corre un escáner desde esta IP. -->
+    <key>CUOTA_POR_HORA</key><string>6</string>
+    <!-- launchd arranca con un PATH minimo (/usr/bin:/bin:/usr/sbin:/sbin) y ahi no esta
+         node, que auditar.sh necesita hasta para validar la URL. Sin esta linea toda
+         auditoria lanzada desde la web muere con "node: command not found" y un enganoso
+         "URL invalida". Solo se ve en el despliegue real: una corrida a mano hereda el
+         PATH del shell y funciona. -->
+    <key>PATH</key><string>/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
+
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+
+  <key>StandardOutPath</key><string>/tmp/auditorias.log</string>
+  <key>StandardErrorPath</key><string>/tmp/auditorias.err</string>
+</dict>
+</plist>
